@@ -20,6 +20,9 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://rivo-andriharisoa-site.vercel.app"),
+  alternates: {
+    canonical: "/",
+  },
   title: {
     default: "Rivo Andriharisoa — Développeur full-stack web et mobile",
     template: "%s | Rivo Andriharisoa",
