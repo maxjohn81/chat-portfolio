@@ -1,21 +1,20 @@
-"use client";
+import { PortfolioApp } from "@/components/portfolio-app";
+import { api } from "@/lib/api";
 
-import { useState } from "react";
-import { SiteHeader } from "@/components/layout/site-header";
-import { ChatWindow } from "@/components/chat/chat-window";
-import { SplashScreen } from "@/components/splash-screen";
+export default async function Home() {
+  const [projets, competences, experiences, educations] = await Promise.allSettled([
+    api.getProjets(),
+    api.getCompetences(),
+    api.getExperiences(),
+    api.getEducations(),
+  ]);
 
-export default function Home() {
-  const [entered, setEntered] = useState(false);
+  const data = {
+    projets: projets.status === "fulfilled" ? projets.value : [],
+    competences: competences.status === "fulfilled" ? competences.value : [],
+    experiences: experiences.status === "fulfilled" ? experiences.value : [],
+    educations: educations.status === "fulfilled" ? educations.value : [],
+  };
 
-  if (!entered) {
-    return <SplashScreen onEnter={() => setEntered(true)} />;
-  }
-
-  return (
-    <div className="flex h-screen flex-col animate-in fade-in duration-300">
-      <SiteHeader />
-      <ChatWindow />
-    </div>
-  );
+  return <PortfolioApp initialData={data} />;
 }

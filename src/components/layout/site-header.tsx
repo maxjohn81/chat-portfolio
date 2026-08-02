@@ -5,19 +5,22 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { ProfileModal } from "../profile-modal";
 
 export function SiteHeader() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <header className="sticky top-0 z-10 border-b bg-background/80 backdrop-blur">
+    <header className="fixed top-0 left-0 right-0 z-10 border-b bg-background/80 backdrop-blur">
       <div className="mx-auto flex w-full max-w-2xl items-center justify-between px-6 py-3">
         <div className="flex items-center gap-3">
 
-          <Avatar className="h-12 w-12">
-            <AvatarImage src="/avatar.png" alt="Rivo Andriharisoa" />
-            {/* <AvatarFallback className="bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300">RA</AvatarFallback> */}
-          </Avatar>
+          <ProfileModal>
+            <Avatar className="h-9 w-9">
+              <AvatarImage src="/icon.png" alt="Rivo Andriharisoa" />
+              <AvatarFallback className="bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300">RA</AvatarFallback>
+            </Avatar>
+          </ProfileModal>
           <div>
             <p className="text-sm font-medium leading-none">Rivo Andriharisoa</p>
             <div className="mt-1 flex items-center gap-1.5">

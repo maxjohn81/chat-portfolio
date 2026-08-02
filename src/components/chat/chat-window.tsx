@@ -6,24 +6,24 @@ import { MessageBubble } from "./message-bubble";
 import { TypingIndicator } from "./typing-indicator";
 import { QuickReplies } from "./quick-replies";
 import { ChatInput } from "./chat-input";
-import { CONVERSATION } from "@/lib/conversation";
-import { ChatMessage, Reply } from "@/lib/types";
+import { buildConversation } from "@/lib/conversation";
+import { ChatMessage, PortfolioData, Reply } from "@/lib/types";
 
 function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export function ChatWindow() {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+export function ChatWindow({ initialData }: { initialData: PortfolioData }) {
+  const CONVERSATION = buildConversation(initialData);
+
+  const [messages, setMessages] = useState<ChatMessage[]>(() =>
+    CONVERSATION.start.bot.map((m) => ({ id: crypto.randomUUID(), role: "bot" as const, ...m })),
+  );
   const [currentNode, setCurrentNode] = useState("start");
   const [busy, setBusy] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const node = CONVERSATION[currentNode];
-
-  useEffect(() => {
-    playNode("start");
-  }, []);
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -33,9 +33,9 @@ export function ChatWindow() {
     setBusy(true);
     const target = CONVERSATION[nodeKey];
 
-    for (const line of target.bot) {
+    for (const item of target.bot) {
       await sleep(500 + Math.random() * 300);
-      setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: "bot", content: line }]);
+      setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: "bot", ...item }]);
     }
 
     setCurrentNode(nodeKey);
@@ -44,21 +44,39 @@ export function ChatWindow() {
 
   function handleSelect(reply: Reply, label: string) {
     if (busy) return;
-    setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: "user", content: label }]);
+    // ✅ nouveau format
+    setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: "user", type: "text", text: label }]);
     playNode(reply.next);
   }
 
-  function handleFreeText(value: string) {
+  async function handleFreeText(value: string) {
     const match = node.replies.find((r) => r.keywords.includes(value.toLowerCase()));
-    setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: "user", content: value }]);
+    setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: "user", type: "text", text: value }]);
 
     if (match) {
       playNode(match.next);
-    } else {
+      return;
+    }
+
+    setBusy(true);
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: value }),
+      });
+      const data = await res.json();
       setMessages((prev) => [
         ...prev,
-        { id: crypto.randomUUID(), role: "bot", content: "Je n'ai pas compris — utilise un des boutons ci-dessous." },
+        { id: crypto.randomUUID(), role: "bot", type: "text", text: data.reply ?? "Je n'ai pas pu répondre, réessaie." },
       ]);
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        { id: crypto.randomUUID(), role: "bot", type: "text", text: "Une erreur est survenue, réessaie plus tard." },
+      ]);
+    } finally {
+      setBusy(false);
     }
   }
 
