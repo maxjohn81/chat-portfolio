@@ -31,7 +31,7 @@ export const TypingText = ({
   duration = 2,
   fontSize = "text-4xl",
   fontWeight = "font-bold",
-  color = "text-white",
+  color,
   letterSpacing = "tracking-wide",
   align = "left",
   loop = false,

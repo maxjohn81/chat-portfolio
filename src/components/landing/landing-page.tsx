@@ -13,6 +13,8 @@ import NeuralLinkBackground from "../lightswind/neural-link-background";
 import { Header } from "../layout/header";
 import { ScrollTimeline } from "../lightswind/scroll-timeline";
 import ThreeDCarousel from "../lightswind/3d-carousel";
+import { useState } from "react";
+import { SlideToConfirm } from "../lightswind/slide-to-confirm";
 
 const FloatingShape = dynamic(
   () => import("@/components/three/floating-shape").then((mod) => mod.FloatingShape),
@@ -202,9 +204,24 @@ const events = [
 export function LandingPage({ data, visitorCount, onEnter }: Props) {
   const years = computeYearsOfExperience(data.experiences);
   const projetsVisibles = data.projets.filter((p) => p.statut === "brouillon");
+  const [landing, setLanding] = useState(false);
+
+  const handleConfirm = async () => {
+    // Simulate async operation
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    setTimeout(() => {
+      setLanding(true);
+    }, 1500);
+  };
 
   return (
     <div className="min-h-screen">
+      <div className={`${landing ? 'hidden' : 'fixed visible flex w-full h-full justify-center flex-col items-center z-20 bg-white dark:bg-gray-900'}`} >
+        <h1 className="text-2xl font-semibold sm:text-3xl mb-4">
+          Glissez vers la droite pour passer
+        </h1>
+        <SlideToConfirm onConfirm={handleConfirm} />
+      </div>
       <div className="fixed w-full -z-10 flex h-screen items-center justify-center">
         <NeuralLinkBackground
           nodeColor="#10b981"      // emerald-500

@@ -151,7 +151,7 @@ const NeuralLinkBackground: React.FC<NeuralLinkProps> = ({
     // Helper: Spawn a path-hopping packet
     const spawnPacket = (startIdx: number, fromCursor = false) => {
       if (nodes.length === 0) return;
-
+      
       // Build a random connected neighbor path
       const path: number[] = [startIdx];
       let currentIdx = startIdx;
@@ -169,7 +169,7 @@ const NeuralLinkBackground: React.FC<NeuralLinkProps> = ({
       if (path.length > 1) {
         const speed = 0.04 + Math.random() * 0.03; // travel progress step per frame
         const size = 2.0 + Math.random() * 2.0;
-
+        
         // If starting from cursor, animate it originating from mouse coordinates
         const mouse = mouseRef.current;
         const startX = fromCursor ? mouse.x : nodes[startIdx].x;
@@ -280,11 +280,11 @@ const NeuralLinkBackground: React.FC<NeuralLinkProps> = ({
 
       // Theme-adaptive styling overrides
       const currentBgFill = isDark ? "rgba(0, 0, 0, 1.0)" : "rgba(255, 255, 255, 1.0)";
-
-      // Node and synapse line styling adjustments — cohérent avec la palette émeraude du site
-      const finalNodeColor = isDark ? nodeColor : "#059669"; // emerald-600 en light mode
-      const finalLineStyle = isDark ? "255, 255, 255" : "5, 150, 105"; // blanc vs emerald-600
-      const finalPacketColor = isDark ? packetColor : "#0d9488"; // teal, contraste léger avec l'émeraude
+      
+      // Node and synapse line styling adjustments
+      const finalNodeColor = isDark ? nodeColor : "#0d9488"; // indigo in light mode
+      const finalLineStyle = isDark ? "255, 255, 255" : "79, 70, 229"; // white vs indigo
+      const finalPacketColor = isDark ? packetColor : "#0d9488"; // deep teal in light mode
 
       // Clear transparently
       ctx.clearRect(0, 0, width, height);
