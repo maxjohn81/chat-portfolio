@@ -68,8 +68,8 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-       suppressHydrationWarning
-      className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable, publicSansHeading.variable)}
+      suppressHydrationWarning
+      className={cn("h-full scroll-smooth", "antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable, publicSansHeading.variable)}
     >
       <body className="min-h-full flex flex-col">
         <JsonLd />
@@ -79,6 +79,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+         
           {children}
         </ThemeProvider>
       </body>

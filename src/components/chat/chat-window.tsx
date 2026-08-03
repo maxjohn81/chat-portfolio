@@ -83,7 +83,7 @@ export function ChatWindow({ initialData }: { initialData: PortfolioData }) {
   return (
     <div className="flex h-[calc(100vh-4.5rem)] flex-col">
       <ScrollArea className="flex-1">
-        <div className="mx-auto flex w-full max-w-2xl flex-col gap-3 px-6 py-6">
+        <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-6">
           {messages.map((msg) => (
             <MessageBubble key={msg.id} message={msg} />
           ))}

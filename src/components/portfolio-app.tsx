@@ -3,14 +3,14 @@
 import { useState } from "react";
 import { SiteHeader } from "@/components/layout/site-header";
 import { ChatWindow } from "@/components/chat/chat-window";
-import { SplashScreen } from "@/components/splash-screen";
+import { LandingPage } from "@/components/landing/landing-page";
 import { PortfolioData } from "@/lib/types";
 
-export function PortfolioApp({ initialData }: { initialData: PortfolioData }) {
+export function PortfolioApp({ initialData, visitorCount }: { initialData: PortfolioData; visitorCount?: number }) {
   const [entered, setEntered] = useState(false);
 
   if (!entered) {
-    return <SplashScreen onEnter={() => setEntered(true)} />;
+    return <LandingPage data={initialData} visitorCount={visitorCount} onEnter={() => setEntered(true)} />;
   }
 
   return (

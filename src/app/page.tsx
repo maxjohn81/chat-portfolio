@@ -2,6 +2,7 @@ import { PortfolioApp } from "@/components/portfolio-app";
 import { api } from "@/lib/api";
 
 export default async function Home() {
+  await new Promise((r) => setTimeout(r, 4000)); // ⚠️ à retirer après test
   const [projets, competences, experiences, educations] = await Promise.allSettled([
     api.getProjets(),
     api.getCompetences(),

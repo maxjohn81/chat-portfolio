@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { PROFILE } from "@/lib/profile";
-import { Phone, Mail } from "lucide-react";
+import { Phone, Mail, Download } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
 const SOCIAL_ICONS = { github: FaGithub, linkedin: FaLinkedin };
@@ -28,12 +28,12 @@ export function ProfileModal({ children }: Props) {
                 </button>
             </DialogTrigger>
 
-            <DialogContent className="max-w-sm overflow-hidden p-0 gap-0">
+            <DialogContent className="w-full max-w-sm overflow-hidden p-0 gap-0 ">
                 {/* Bandeau coloré en fond, façon carte de visite */}
                 <div className="h-20 bg-gradient-to-r from-blue-500 to-violet-500" />
 
                 <div className="flex flex-col items-center px-6 pb-6 -mt-10">
-                    <Avatar className="h-20 w-20 border-4 border-background shadow-md">
+                    <Avatar className="h-30 w-30 border-4 border-background shadow-md">
                         <AvatarImage src={PROFILE.avatar} alt={PROFILE.name} />
                         <AvatarFallback className="bg-blue-100 text-lg text-blue-700 dark:bg-blue-950 dark:text-blue-300">
                             RA
@@ -79,6 +79,13 @@ export function ProfileModal({ children }: Props) {
                                 </a>
                             );
                         })}
+                        <a href="/api/cv"
+                            download
+                            className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-blue-600 transition-colors hover:bg-muted dark:text-blue-400"
+                        >
+                            <Download className="h-4 w-4" />
+                            <span>Télécharger mon CV</span>
+                        </a>
                     </div>
                 </div>
             </DialogContent>

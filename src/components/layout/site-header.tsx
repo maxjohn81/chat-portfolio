@@ -12,7 +12,7 @@ export function SiteHeader() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-10 border-b bg-background/80 backdrop-blur">
-      <div className="mx-auto flex w-full max-w-2xl items-center justify-between px-6 py-3">
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-3">
         <div className="flex items-center gap-3">
 
           <ProfileModal>
