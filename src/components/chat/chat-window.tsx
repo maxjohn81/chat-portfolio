@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
 import { MessageBubble } from "./message-bubble";
 import { TypingIndicator } from "./typing-indicator";
 import { QuickReplies } from "./quick-replies";
@@ -13,7 +15,7 @@ function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-export function ChatWindow({ initialData }: { initialData: PortfolioData }) {
+export function ChatWindow({ initialData, onBack }: { initialData: PortfolioData; onBack: () => void }) {
   const CONVERSATION = buildConversation(initialData);
 
   const [messages, setMessages] = useState<ChatMessage[]>(() =>
@@ -84,6 +86,17 @@ export function ChatWindow({ initialData }: { initialData: PortfolioData }) {
     <div className="flex h-[calc(100vh-4.5rem)] flex-col">
       <ScrollArea className="flex-1">
         <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-6 py-6">
+          <div className="flex justify-start">
+            <Button
+              variant="outline"
+              size="sm"
+              className="gap-2 rounded-full"
+              onClick={onBack}
+            >
+              <ArrowLeft className="h-4 w-4" />
+              Retour à l&apos;accueil
+            </Button>
+          </div>
           {messages.map((msg) => (
             <MessageBubble key={msg.id} message={msg} />
           ))}

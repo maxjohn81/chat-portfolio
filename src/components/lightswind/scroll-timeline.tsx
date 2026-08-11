@@ -43,27 +43,7 @@ export interface ScrollTimelineProps {
   smoothScroll?: boolean;
 }
 
-const DEFAULT_EVENTS: TimelineEvent[] = [
-  {
-    year: "2023",
-    title: "Major Achievement",
-    subtitle: "Organization Name",
-    description:
-      "Description of the achievement or milestone reached during this time period.",
-  },
-  {
-    year: "2022",
-    title: "Important Milestone",
-    subtitle: "Organization Name",
-    description: "Details about this significant milestone and its impact.",
-  },
-  {
-    year: "2021",
-    title: "Key Event",
-    subtitle: "Organization Name",
-    description: "Information about this key event in the timeline.",
-  },
-];
+const DEFAULT_EVENTS: TimelineEvent[] = [];
 
 export const ScrollTimeline = ({
   events = DEFAULT_EVENTS,

@@ -1,5 +1,7 @@
 import { BotMessage, ConversationNode, PortfolioData, TimelineItem } from "./types";
 import { formatPeriode } from "./format";
+import { estProjetVisible } from "./visibilite";
+import { PROFILE } from "./profile";
 
 export function buildConversation(data: PortfolioData): Record<string, ConversationNode> {
   const safeData: PortfolioData = {
@@ -10,7 +12,7 @@ export function buildConversation(data: PortfolioData): Record<string, Conversat
   };
 
   const projetsVisibles = safeData.projets
-    .filter((p) => p.statut === "brouillon")
+    .filter(estProjetVisible)
     .sort((a, b) => (a.ordre_affichage ?? 99) - (b.ordre_affichage ?? 99));
 
   const competencesTriees = [...safeData.competences].sort(
@@ -83,7 +85,7 @@ export function buildConversation(data: PortfolioData): Record<string, Conversat
       replies: [{ label: "Retour au menu", keywords: ["m", "menu"], next: "menu", icon: "home", color: "slate" }],
     },
     contact: {
-      bot: [text("Disponible par email pour discuter d'un projet : rivo.andriharisoa@example.com")],
+      bot: [text(`Disponible par email pour discuter d'un projet : ${PROFILE.email}`)],
       replies: [{ label: "Retour au menu", keywords: ["m", "menu"], next: "menu", icon: "home", color: "slate" }],
     },
   };

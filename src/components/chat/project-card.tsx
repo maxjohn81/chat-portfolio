@@ -1,8 +1,9 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Code2, ExternalLink } from "lucide-react";
+import { ArrowRight, Code2, ExternalLink } from "lucide-react";
 import { Projet } from "@/lib/types";
+import { slugify } from "@/lib/slug";
 
 export function ProjectCard({ projet }: { projet: Projet }) {
   return (
@@ -24,24 +25,29 @@ export function ProjectCard({ projet }: { projet: Projet }) {
           </div>
         )}
 
-        {(projet.lien_demo || projet.lien_github) && (
-          <div className="mt-3 flex gap-2">
-            {projet.lien_demo && (
-              <Button  size="sm" variant="outline" className="h-7 gap-1.5 rounded-full text-xs">
-                <a href={projet.lien_demo} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-3 w-3" /> Démo
-                </a>
-              </Button>
-            )}
-            {projet.lien_github && (
-              <Button size="sm" variant="outline" className="h-7 gap-1.5 rounded-full text-xs">
-                <a href={projet.lien_github} target="_blank" rel="noopener noreferrer">
-                  <Code2 className="h-3 w-3" /> Code
-                </a>
-              </Button>
-            )}
-          </div>
-        )}
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <a
+            href={`/projets/${slugify(projet.titre)}`}
+            className="inline-flex h-7 items-center gap-1.5 rounded-full border px-3 text-xs text-foreground transition-colors hover:bg-muted-foreground/10"
+          >
+            <ArrowRight className="h-3 w-3" />
+            Voir la fiche
+          </a>
+          {projet.lien_demo && (
+            <Button size="sm" variant="outline" className="h-7 gap-1.5 rounded-full text-xs">
+              <a href={projet.lien_demo} target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="h-3 w-3" /> Démo
+              </a>
+            </Button>
+          )}
+          {projet.lien_github && (
+            <Button size="sm" variant="outline" className="h-7 gap-1.5 rounded-full text-xs">
+              <a href={projet.lien_github} target="_blank" rel="noopener noreferrer">
+                <Code2 className="h-3 w-3" /> Code
+              </a>
+            </Button>
+          )}
+        </div>
       </div>
     </Card>
   );
