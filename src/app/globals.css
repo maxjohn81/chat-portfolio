@@ -129,3 +129,16 @@
     @apply font-sans;
   }
 }
+
+/* ScrollSmoother (GSAP) */
+#smooth-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+
+#smooth-content {
+  will-change: transform;
+}

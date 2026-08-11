@@ -3,6 +3,7 @@ import { PROFILE } from "@/lib/profile";
 
 const navigation = [
   { label: "Accueil", href: "#accueil" },
+  { label: "À propos", href: "#a-propos" },
   { label: "Projets", href: "#projets" },
   { label: "Expérience", href: "#experience" },
 ];
@@ -16,7 +17,7 @@ export function Footer() {
             <p className="font-semibold">{PROFILE.name}</p>
             <p className="mt-1 text-sm text-muted-foreground">{PROFILE.title}</p>
             <p className="mt-3 max-w-xs text-sm text-muted-foreground">
-              Basé à Madagascar, je conçois des applications complètes du back-end à l'interface finale.
+              Basé à Madagascar, je conçois des applications complètes du back-end à l&apos;interface finale.
             </p>
           </div>
 

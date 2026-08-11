@@ -13,6 +13,7 @@ import HamburgerMenuOverlay from "../lightswind/hamburger-menu-overlay";
 
 const menuItems = [
     { label: "Accueil", icon: <Home size={20} />, href: "#accueil" },
+    { label: "À propos", icon: <User size={20} />, href: "#a-propos" },
     { label: "Projets", icon: <FolderKanban size={20} />, href: "#projets" },
     { label: "Expérience", icon: <Briefcase size={20} />, href: "#experience" },
 ];

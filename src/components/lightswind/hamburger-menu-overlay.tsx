@@ -122,7 +122,13 @@ export const HamburgerMenuOverlay: React.FC<HamburgerMenuOverlayProps> = ({
     }
 
     if (item.href && !item.onClick) {
-      window.location.href = item.href;
+      // Clic sur une ancre synthétique : le gestionnaire global (ScrollSmoother)
+      // intercepte l'événement au niveau du document pour un scroll fluide.
+      const anchor = document.createElement("a");
+      anchor.href = item.href;
+      document.body.appendChild(anchor);
+      anchor.click();
+      anchor.remove();
     }
 
     if (!keepOpenOnItemClick) {

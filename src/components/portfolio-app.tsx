@@ -34,7 +34,13 @@ export function PortfolioApp({ initialData, visitorCount }: { initialData: Portf
     <div className="flex h-screen flex-col animate-in fade-in duration-300">
       <SiteHeader />
       <div className="flex-1"></div>
-      <ChatWindow initialData={data} onBack={() => setEntered(false)} />
+      <ChatWindow
+        initialData={data}
+        onBack={() => {
+          setEntered(false);
+          window.scrollTo(0, 0);
+        }}
+      />
     </div>
   );
 }
