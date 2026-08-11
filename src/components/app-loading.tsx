@@ -1,13 +1,8 @@
 "use client";
 
-import { useTheme } from "next-themes";
 import { TypingText } from "@/components/lightswind/typing-text";
 
-export function AppLoading() {
-  const { resolvedTheme } = useTheme();
-
-  const isDark = resolvedTheme === "dark";
-
+export function AppLoading({ onDone }: { onDone?: () => void }) {
   return (
     <div className="flex h-screen flex-col items-center justify-center gap-5">
       <TypingText
@@ -15,9 +10,10 @@ export function AppLoading() {
         duration={2}
         fontSize="text-5xl"
         fontWeight="font-extrabold"
-        color={isDark ? "text-white" : "text-black"}
+        color="text-black dark:text-white"
         letterSpacing="tracking-wider"
         align="center"
+        onDone={onDone}
       >
         Bienvenue
       </TypingText>

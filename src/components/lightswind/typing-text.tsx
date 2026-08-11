@@ -21,6 +21,7 @@ export interface TypingTextProps {
   letterSpacing?: string;
   align?: "left" | "center" | "right";
   loop?: boolean;
+  onDone?: () => void;
 }
 
 export const TypingText = ({
@@ -35,6 +36,7 @@ export const TypingText = ({
   letterSpacing = "tracking-wide",
   align = "left",
   loop = false,
+  onDone,
 }: TypingTextProps) => {
   const [textContent, setTextContent] = useState<string>("");
 
@@ -107,6 +109,7 @@ export const TypingText = ({
           custom={index}
           initial="hidden"
           animate="visible"
+          onAnimationComplete={index === characters.length - 1 ? onDone : undefined}
         >
           {char}
         </motion.span>

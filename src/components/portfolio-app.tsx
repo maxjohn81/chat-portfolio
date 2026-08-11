@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SiteHeader } from "@/components/layout/site-header";
 import { ChatWindow } from "@/components/chat/chat-window";
 import { LandingPage } from "@/components/landing/landing-page";
@@ -8,23 +8,13 @@ import { AppLoading } from "@/components/app-loading";
 import { usePortfolioData } from "@/hooks/use-portfolio-data";
 import { PortfolioData } from "@/lib/types";
 
-const SPLASH_MIN_MS = 600;
-
 export function PortfolioApp({ initialData, visitorCount }: { initialData: PortfolioData; visitorCount?: number }) {
-  const { data, loading, loadingProjets, loadingCompetences, loadingExperiences, loadingEducations } =
-    usePortfolioData(initialData);
+  const { data, loadingProjets, loadingCompetences, loadingExperiences } = usePortfolioData(initialData);
   const [entered, setEntered] = useState(false);
   const [splashDone, setSplashDone] = useState(false);
 
-  useEffect(() => {
-    if (!loading) {
-      const timer = setTimeout(() => setSplashDone(true), SPLASH_MIN_MS);
-      return () => clearTimeout(timer);
-    }
-  }, [loading]);
-
   if (!splashDone) {
-    return <AppLoading />;
+    return <AppLoading onDone={() => setSplashDone(true)} />;
   }
 
   if (!entered) {

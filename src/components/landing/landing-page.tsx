@@ -17,10 +17,7 @@ import { ScrollTimeline } from "../lightswind/scroll-timeline";
 import ThreeDCarousel from "../lightswind/3d-carousel";
 import { Footer } from "../layout/footer";
 
-const FloatingShape = dynamic(
-  () => import("@/components/three/floating-shape").then((mod) => mod.FloatingShape),
-  { ssr: false, loading: () => null },
-);
+
 
 interface Props {
   data: PortfolioData;
