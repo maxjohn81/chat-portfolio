@@ -69,7 +69,7 @@ export default function RootLayout({
     <html
       lang="fr"
       suppressHydrationWarning
-      className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable, publicSansHeading.variable)}
+      className={cn("h-full scroll-smooth", "antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable, publicSansHeading.variable)}
     >
       <body className="min-h-full flex flex-col">
         <JsonLd />
