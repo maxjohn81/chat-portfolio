@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -19,8 +19,31 @@ export default function HorizontalScrollSection({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
+  // Mobile (< lg) : pas de scroll horizontal — les sections s'empilent normalement,
+  // le pin GSAP n'est jamais créé.
+  const [isMobile, setIsMobile] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 1023px)").matches,
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 1023px)");
+    const onChange = () => setIsMobile(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  // Recadrage du layout après un basculement mobile ↔ desktop
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => ScrollTrigger.refresh());
+    return () => cancelAnimationFrame(raf);
+  }, [isMobile]);
+
   useGSAP(
     () => {
+      if (isMobile) return;
+
       // Création différée d'un tick : ScrollSmoother (créé dans LandingPage, après les
       // effets du scope enfant) doit exister avant ce pin, sinon le pin est mal intégré.
       const raf = requestAnimationFrame(() => {
@@ -54,27 +77,35 @@ export default function HorizontalScrollSection({
       });
       return () => cancelAnimationFrame(raf);
     },
-    { scope: wrapperRef },
+    { scope: wrapperRef, dependencies: [isMobile] },
   );
 
   // Recalibrage du pin une fois les données chargées (skeletons → contenu final)
   useEffect(() => {
-    if (loadingCompetences) return;
+    if (loadingCompetences || isMobile) return;
     const raf = requestAnimationFrame(() => ScrollTrigger.refresh());
     return () => cancelAnimationFrame(raf);
-  }, [loadingCompetences]);
+  }, [loadingCompetences, isMobile]);
 
   return (
     <div ref={wrapperRef} className="relative overflow-hidden">
-      {/* Bandeau horizontal permanent (scroll vertical → pan horizontal), sur tous les écrans */}
-      <div ref={trackRef} className="flex w-max">
-        <div className="min-h-screen w-screen shrink-0">
+      {isMobile ? (
+        // Mobile : sections empilées verticalement, sans pin ni pan horizontal
+        <>
           <Soft_skills />
-        </div>
-        <div className="min-h-screen w-screen shrink-0">
           <Competence />
+        </>
+      ) : (
+        /* Desktop : bandeau horizontal permanent (scroll vertical → pan horizontal) */
+        <div ref={trackRef} className="flex w-max">
+          <div className="min-h-screen w-screen shrink-0">
+            <Soft_skills />
+          </div>
+          <div className="min-h-screen w-screen shrink-0">
+            <Competence />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
