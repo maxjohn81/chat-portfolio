@@ -118,7 +118,7 @@ export function HeroSection({
         {/* Avatar — énorme, en arrière-plan derrière le titre sur grands écrans ; petit au-dessus du texte sur mobile */}
         <div
           id="hero-avatar"
-          className="relative z-0 mx-auto h-16 w-16 sm:h-20 sm:w-20 lg:absolute lg:inset-0 lg:m-auto lg:h-[62vh] lg:w-[62vh]"
+          className="relative z-0 mx-auto h-24 w-24 sm:h-28 sm:w-28 lg:absolute lg:inset-0 lg:m-auto lg:h-[62vh] lg:w-[62vh]"
         >
           <ProfileModal>
             <Avatar className="h-full w-full shadow-md">

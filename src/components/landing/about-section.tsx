@@ -23,7 +23,7 @@ export function AboutSection() {
           </div>
         </div>
 
-        <div data-speed="0.9" className="max-w-lg bg-white/50 p-4 rounded-2xl backdrop-blur-xs">
+        <div data-speed="0.9" className="max-w-lg bg-white/50 dark:bg-black/50 p-4 rounded-2xl backdrop-blur-xs">
           <p className="text-sm font-medium uppercase tracking-wide text-primary">À propos</p>
           <h2 className="mt-2 text-2xl font-bold sm:text-3xl">Un développeur curieux et polyvalent</h2>
           <p className="mt-4 leading-relaxed text-muted-foreground">Je transforme des idées en applications web et mobiles modernes. Du back-end à l'interface utilisateur, en passant par le déploiement, je construis des solutions complètes, performantes et pensées pour offrir une expérience simple et agréable</p>

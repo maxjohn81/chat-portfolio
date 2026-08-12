@@ -23,46 +23,36 @@ export default function HorizontalScrollSection({
     () => {
       // Création différée d'un tick : ScrollSmoother (créé dans LandingPage, après les
       // effets du scope enfant) doit exister avant ce pin, sinon le pin est mal intégré.
-      const mm = gsap.matchMedia();
       const raf = requestAnimationFrame(() => {
-        mm.add("(min-width: 1024px)", () => {
-          const track = trackRef.current;
-          const wrapper = wrapperRef.current;
-          if (!track || !wrapper || !track.children.length) return;
+        const track = trackRef.current;
+        const wrapper = wrapperRef.current;
+        if (!track || !wrapper || !track.children.length) return;
 
-          // Largeur totale du contenu horizontal, calculée dynamiquement
-          const getDistance = () => {
-            const width = Array.from(track.children).reduce(
-              (sum, child) => sum + (child as HTMLElement).offsetWidth,
-              0,
-            );
-            return Math.max(width - window.innerWidth, 0);
-          };
+        // Largeur totale du contenu horizontal, calculée dynamiquement
+        const getDistance = () => {
+          const width = Array.from(track.children).reduce(
+            (sum, child) => sum + (child as HTMLElement).offsetWidth,
+            0,
+          );
+          return Math.max(width - window.innerWidth, 0);
+        };
 
-          const tween = gsap.to(track, {
-            x: () => -getDistance(),
-            ease: "none",
-            scrollTrigger: {
-              trigger: wrapper,
-              start: "top top",
-              end: () => "+=" + getDistance(),
-              scrub: 1,
-              pin: true,
-              pinType: "transform",
-              anticipatePin: 1,
-              invalidateOnRefresh: true,
-            },
-          });
-
-          return () => {
-            tween.scrollTrigger?.kill();
-            tween.kill();
-          };
+        gsap.to(track, {
+          x: () => -getDistance(),
+          ease: "none",
+          scrollTrigger: {
+            trigger: wrapper,
+            start: "top top",
+            end: () => "+=" + getDistance(),
+            scrub: 1,
+            pin: true,
+            pinType: "transform",
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
         });
       });
-      return () => {
-        cancelAnimationFrame(raf);
-      };
+      return () => cancelAnimationFrame(raf);
     },
     { scope: wrapperRef },
   );
@@ -76,12 +66,12 @@ export default function HorizontalScrollSection({
 
   return (
     <div ref={wrapperRef} className="relative overflow-hidden">
-      {/* Empilement vertical par défaut ; bandeau horizontal uniquement sur grands écrans */}
-      <div ref={trackRef} className="block lg:flex lg:w-max">
-        <div className="w-full lg:min-h-screen lg:w-screen lg:shrink-0">
+      {/* Bandeau horizontal permanent (scroll vertical → pan horizontal), sur tous les écrans */}
+      <div ref={trackRef} className="flex w-max">
+        <div className="min-h-screen w-screen shrink-0">
           <Soft_skills />
         </div>
-        <div className="w-full lg:min-h-screen lg:w-screen lg:shrink-0">
+        <div className="min-h-screen w-screen shrink-0">
           <Competence />
         </div>
       </div>
