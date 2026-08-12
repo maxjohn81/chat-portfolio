@@ -17,6 +17,8 @@ import ThreeDCarousel from "../lightswind/3d-carousel";
 import { Footer } from "../layout/footer";
 import { HeroSection } from "./hero-section";
 import { AboutSection } from "./about-section";
+import Soft_skills from "./soft-skills";
+import Competence from "./competence";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollSmoother, ScrollToPlugin);
 
@@ -166,7 +168,29 @@ export function LandingPage({
 
           <AboutSection />
 
-          <section id="experience" className="relative mx-auto max-w-6xl px-6 pb-20">
+          <Soft_skills />
+
+          <Competence />
+
+
+          <section
+            id="experience"
+            className="relative mx-auto max-w-6xl px-6 py-20"
+          >
+            {/* Ligne de lumière verticale — signature "parcours", différente du glow radial des autres sections */}
+            <div
+              aria-hidden
+              className="pointer-events-none absolute left-1/2 top-0 -z-10 h-full w-px -translate-x-1/2"
+              style={{
+                background:
+                  "linear-gradient(to bottom, transparent, hsl(var(--primary) / 0.25) 20%, hsl(var(--primary) / 0.25) 80%, transparent)",
+              }}
+            />
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-border to-transparent"
+            />
+
             {loadingExperiences ? (
               <ExperienceSkeleton />
             ) : (
@@ -183,25 +207,66 @@ export function LandingPage({
 
           {/* Aperçu projets */}
           {(loadingProjets || projetsVisibles.length > 0) && (
-            <section id="projets" className="mx-auto max-w-6xl px-6 pb-20">
-              <h2 className="mb-4 text-center text-sm font-medium uppercase tracking-wide text-muted-foreground">
-                Projets récents
-              </h2>
+            <section id="projets" className="relative overflow-hidden py-20">
+              {/* Ambient glow, centré — cohérent avec les sections compétences / soft skills */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 -z-10"
+                style={{
+                  background:
+                    "radial-gradient(50% 40% at 50% 0%, hsl(var(--primary) / 0.06), transparent 70%)",
+                }}
+              />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-px bg-gradient-to-r from-transparent via-border to-transparent"
+              />
 
-              {loadingProjets ? (
-                <div className="flex items-center justify-center gap-6 overflow-hidden py-10">
-                  {Array.from({ length: 3 }).map((_, i) => (
-                    <Skeleton key={i} className="h-[500px] w-full max-w-md rounded-xl" />
-                  ))}
+              <div className="mx-auto max-w-6xl px-6">
+                {/* Header */}
+                <div className="mx-auto max-w-xl animate-in fade-in slide-in-from-bottom-4 text-center duration-700">
+                  <div className="flex items-center justify-center gap-3">
+                    <span className="h-px w-8 bg-primary" aria-hidden />
+                    <p className="text-sm font-medium uppercase tracking-[0.2em] text-primary">
+                      Projets récents
+                    </p>
+                    <span className="h-px w-8 bg-primary" aria-hidden />
+                  </div>
+
+                  <h2 className="mt-4 text-3xl font-bold leading-tight tracking-tight sm:text-4xl">
+                    Ce que j'ai construit
+                  </h2>
+
+                  <p className="mt-3 text-base leading-relaxed text-muted-foreground">
+                    Une sélection de projets, du prototype à la mise en production.
+                  </p>
                 </div>
-              ) : (
-                <ThreeDCarousel
-                  items={carouselItems}
-                  autoRotate={true}
-                  rotateInterval={4000}
-                  cardHeight={500}
-                />
-              )}
+
+                {/* Carousel / loading state */}
+                <div className="mt-14 animate-in fade-in slide-in-from-bottom-6 duration-700 delay-150 fill-mode-both">
+                  {loadingProjets ? (
+                    <div className="flex items-center justify-center gap-6 overflow-hidden py-10">
+                      {Array.from({ length: 3 }).map((_, i) => (
+                        <Skeleton
+                          key={i}
+                          className="h-[500px] w-full max-w-md rounded-xl"
+                          style={{
+                            opacity: i === 1 ? 1 : 0.5,
+                            transform: i === 1 ? "scale(1)" : "scale(0.92)",
+                          }}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <ThreeDCarousel
+                      items={carouselItems}
+                      autoRotate={true}
+                      rotateInterval={4000}
+                      cardHeight={500}
+                    />
+                  )}
+                </div>
+              </div>
             </section>
           )}
 
