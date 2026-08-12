@@ -17,8 +17,7 @@ import ThreeDCarousel from "../lightswind/3d-carousel";
 import { Footer } from "../layout/footer";
 import { HeroSection } from "./hero-section";
 import { AboutSection } from "./about-section";
-import Soft_skills from "./soft-skills";
-import Competence from "./competence";
+import HorizontalScrollSection from "./horizontal-scroll-section";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, ScrollSmoother, ScrollToPlugin);
 
@@ -88,10 +87,9 @@ export function LandingPage({
       // Vol de l'avatar du hero vers la section "À propos"
       const hero = rootRef.current?.querySelector("#accueil");
       const avatar = rootRef.current?.querySelector("#hero-avatar");
-      const anchor = rootRef.current?.querySelector("#about-avatar-anchor");
-      const content = rootRef.current?.querySelector("#hero-content");
+      const anchor = rootRef.current?.querySelector("#a-propos");
 
-      if (hero && avatar && anchor && content) {
+      if (hero && avatar && anchor) {
         const getTargets = () => {
           const ar = avatar.getBoundingClientRect();
           const br = anchor.getBoundingClientRect();
@@ -113,16 +111,15 @@ export function LandingPage({
           },
         });
 
-        tl.to(content, { opacity: 0, y: -120, ease: "none" }, 0).to(
-          avatar,
-          {
-            x: () => getTargets().x,
-            y: () => getTargets().y,
-            scale: () => getTargets().scale,
-            ease: "none",
-          },
-          0,
-        );
+        // La présentation (titre, bio, CTA…) reste visible au scroll ; le très grand
+        // avatar d'arrière-plan rétrécit progressivement et se pose sur la section
+        // "À propos" (le delta reste figé après le pin, l'avatar suit donc l'ancre).
+        tl.to(avatar, {
+          x: () => getTargets().x,
+          y: () => getTargets().y,
+          scale: () => getTargets().scale,
+          ease: "none",
+        });
       }
 
       return () => {
@@ -168,9 +165,7 @@ export function LandingPage({
 
           <AboutSection />
 
-          <Soft_skills />
-
-          <Competence />
+          <HorizontalScrollSection loadingCompetences={loadingCompetences} />
 
 
           <section
