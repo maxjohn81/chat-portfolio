@@ -123,7 +123,7 @@ const FastApiIcon = () => (
 const HeaderLogo = () => (
   <div className="relative flex items-center justify-center shrink-0">
     <img
-      src="/icon.png"
+      src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0nYz0FztrQM5fbiFE7qZDmA5R3RHTDkYk02CoGrvpQQ&s=10"
       alt="Lightswind UI"
       className="h-8 w-auto rounded-full shadow-sm"
     />

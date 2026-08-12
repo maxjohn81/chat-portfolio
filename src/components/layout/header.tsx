@@ -3,7 +3,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Briefcase, FolderKanban, Moon, Sun } from "lucide-react";
+import { Briefcase, Code, FolderKanban, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { ProfileModal } from "../profile-modal";
 import { Home, Search, User, Settings } from "lucide-react";
@@ -14,6 +14,7 @@ import HamburgerMenuOverlay from "../lightswind/hamburger-menu-overlay";
 const menuItems = [
     { label: "Accueil", icon: <Home size={20} />, href: "#accueil" },
     { label: "À propos", icon: <User size={20} />, href: "#a-propos" },
+    { label: "Compétences", icon: <Code size={20} />, href: "#competences" },
     { label: "Expérience", icon: <Briefcase size={20} />, href: "#experience" },
     { label: "Projets", icon: <FolderKanban size={20} />, href: "#projets" },
 ];

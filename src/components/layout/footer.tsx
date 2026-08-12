@@ -1,9 +1,11 @@
 import { Mail, Phone } from "lucide-react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { PROFILE } from "@/lib/profile";
 
 const navigation = [
   { label: "Accueil", href: "#accueil" },
   { label: "À propos", href: "#a-propos" },
+  { label: "Compétences", href: "#competences" },
   { label: "Projets", href: "#projets" },
   { label: "Expérience", href: "#experience" },
 ];
@@ -16,9 +18,7 @@ export function Footer() {
           <div>
             <p className="font-semibold">{PROFILE.name}</p>
             <p className="mt-1 text-sm text-muted-foreground">{PROFILE.title}</p>
-            <p className="mt-3 max-w-xs text-sm text-muted-foreground">
-              Basé à Madagascar, je conçois des applications complètes du back-end à l&apos;interface finale.
-            </p>
+            
           </div>
 
           <div>
@@ -71,9 +71,9 @@ export function Footer() {
                   className="flex h-9 w-9 items-center justify-center rounded-full border bg-background text-muted-foreground transition-colors hover:text-foreground"
                 >
                   {social.icon === "github" ? (
-                    <Mail className="h-4 w-4" />
+                    <FaGithub className="h-4 w-4" />
                   ) : (
-                    <Mail className="h-4 w-4" />
+                    <FaLinkedin className="h-4 w-4" />
                   )}
                 </a>
               ))}

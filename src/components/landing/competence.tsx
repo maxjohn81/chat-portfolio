@@ -24,7 +24,7 @@ export default function Competence() {
     }, []);
 
     return (
-        <section ref={sectionRef} className="relative overflow-hidden py-24 sm:py-32">
+        <section id="competences" ref={sectionRef} className="relative overflow-hidden py-24 sm:py-32">
             {/* Ambient background, mirrored from the soft-skills section but on the right this time */}
             <div
                 aria-hidden
@@ -73,8 +73,8 @@ export default function Competence() {
                 >
                     <div className="mx-auto max-w-4xl rounded-2xl border border-border/60 bg-card/40 p-6 shadow-sm backdrop-blur-sm sm:p-10">
                         <KnowledgeConvergence
-                            title="Mes Stacks"
-                            badgeText="12"
+                            title="Stacks"
+                            badgeText=""
                             glowIntensity="high"
                             dotColor="hsl(var(--primary))"
                         />
